@@ -64,17 +64,15 @@ Machine Learning Models
 
 ## How to Use
 1. Clone the repository:
-
-  git clone https://github.com/your-repo-url.git
+   
+    git clone https://github.com/your-repo-url.git
+   
+    cd your-repo-folder
   
-  cd your-repo-folder
-  
-2. Install dependencies:
-
-
+3. Install dependencies:
     pip install -r requirements.txt
 
-3. Run the Jupyter Notebook or Google Colab to train and evaluate the models.
+4. Run the Jupyter Notebook or Google Colab to train and evaluate the models.
 
 ## Results & Conclusion
 The machine learning model effectively predicts customer churn, allowing businesses to take data-driven retention actions. By analyzing customer behavior and churn patterns, companies can reduce churn rates, improve customer satisfaction, and drive long-term profitability.
