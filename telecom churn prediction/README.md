@@ -1,4 +1,4 @@
-#Telecom Churn Prediction in Telecommunications
+# Telecom Churn Prediction in Telecommunications
 ## Project Overview
 Customer churn is a critical challenge for telecommunications companies, as customers have multiple choices and evolving preferences. This project leverages Supervised Machine Learning (classification) to predict churn, helping businesses identify at-risk customers and implement proactive retention strategies.
 
@@ -28,7 +28,7 @@ Identified key trends and patterns in customer churn
 Visualized relationships between customer attributes and churn rates
 
 3️. Model Building & Evaluation
-Implemented various machine learning models:
+# Implemented various machine learning models:
 
 Logistic Regression
 
@@ -50,7 +50,7 @@ Recall
 
 F1-score
 
-4. Insights & Business Impact
+## Insights & Business Impact
 Identified factors influencing customer churn (e.g., contract type, monthly charges, tenure)
 
 Recommended strategies for reducing churn through personalized offers, improved customer support, and targeted marketing campaigns
