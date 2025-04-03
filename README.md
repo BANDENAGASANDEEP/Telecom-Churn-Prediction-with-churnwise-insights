@@ -1,5 +1,5 @@
 
-# ChurnWise Insights Project
+# Telecom Churn Prediction - ChurnWise Insights
 
 This project consists of a FastAPI backend and a React frontend for telecom customer churn prediction and analysis.
 
@@ -90,6 +90,30 @@ The frontend will be available at: http://localhost:5173
 1. Open your browser and navigate to http://localhost:5173
 2. Use the login page to sign in (register if needed)
 3. Explore the dashboard with churn prediction and analytics features
+## Deployment
+
+### Deploying on Railway
+
+1. Push your code to GitHub.
+
+2. Connect the GitHub repository to Railway.
+
+3. Deploy the backend and frontend services.
+
+4. Access the deployed application at the generated Railway URL.
+
+### Live Deployment
+
+The project is currently deployed at:
+https://telecom-churn-prediction-with-ch-production.up.railway.app
+
+### Usage
+
+1. Open your browser and navigate to http://localhost:5173 (or the Railway URL if deployed).
+
+2. Use the login page to sign in (register if needed).
+
+3. Explore the dashboard with churn prediction and analytics features.
 
 ## API Documentation
 
