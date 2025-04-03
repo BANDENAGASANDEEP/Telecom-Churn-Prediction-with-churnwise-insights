@@ -16,16 +16,16 @@ Part 3: 2000 records
 
 ## Workflow
 1️. Data Preprocessing
-Handled missing values and data inconsistencies
+    Handled missing values and data inconsistencies
 
-Converted Boolean columns to categorical data
+   Converted Boolean columns to categorical data
 
-Standardized numerical features
+   Standardized numerical features
 
 2️. Exploratory Data Analysis (EDA)
-Identified key trends and patterns in customer churn
+   Identified key trends and patterns in customer churn
 
-Visualized relationships between customer attributes and churn rates
+   Visualized relationships between customer attributes and churn rates
 
 3️. Model Building & Evaluation
 # Implemented various machine learning models:
@@ -51,28 +51,29 @@ Visualized relationships between customer attributes and churn rates
 4. F1-score
 
 ## Insights & Business Impact
-Identified factors influencing customer churn (e.g., contract type, monthly charges, tenure)
+   Identified factors influencing customer churn (e.g., contract type, monthly charges, tenure)
 
-Recommended strategies for reducing churn through personalized offers, improved customer support, and targeted marketing campaigns
+   Recommended strategies for reducing churn through personalized offers, improved customer support, and targeted marketing campaigns
 
 ## Technologies Used
-Python (Pandas, NumPy, Scikit-Learn, Matplotlib, Seaborn)
+    Python (Pandas, NumPy, Scikit-Learn, Matplotlib, Seaborn)
 
-Jupyter Notebook / Google Colab
+    Jupyter Notebook / Google Colab
 
-Machine Learning Models
+    Machine Learning Models
 
 ## How to Use
 1. Clone the repository:
    
-    git clone https://github.com/your-repo-url.git
+       git clone https://github.com/your-repo-url.git
    
-    cd your-repo-folder
+       cd your-repo-folder
   
 3. Install dependencies:
-    pip install -r requirements.txt
+   
+              pip install -r requirements.txt
 
-4. Run the Jupyter Notebook or Google Colab to train and evaluate the models.
+5. Run the Jupyter Notebook or Google Colab to train and evaluate the models.
 
 ## Results & Conclusion
 The machine learning model effectively predicts customer churn, allowing businesses to take data-driven retention actions. By analyzing customer behavior and churn patterns, companies can reduce churn rates, improve customer satisfaction, and drive long-term profitability.
