@@ -1,0 +1,700 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-whidth, initial-scale=1.0">
+  <title>Dashboard - TeleGuard</title>
+  <meta name="description" content="TeleGuard Analytics Dashboard">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-background min-h-screen">
+  <!-- Header Navigation -->
+  <header class="glass-nav fixed top-0 left-0 right-0 z-50">
+    <div class="container mx-auto px-6 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <a href="dashboard.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+            </div>
+            <span class="text-xl font-bold text-foreground">TeleGuard</span>
+          </a>
+        </div>
+        
+        <div class="flex items-center gap-8">
+          <nav class="hidden md:flex space-x-1">
+            <button class="nav-link slide-nav-btn active" data-slide="0">Business Analytics</button>
+            <button class="nav-link slide-nav-btn" data-slide="1">Customer Profile</button>
+            <button class="nav-link slide-nav-btn" data-slide="2">Churn Prediction</button>
+          </nav>
+          
+          <div class="flex items-center gap-4">
+            <button id="chatbotToggle" class="flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z"></path>
+                <path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"></path>
+              </svg>
+            </button>
+            
+            <div class="relative">
+              <button id="userMenuBtn" class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <span class="hidden md:inline text-sm font-medium">John Doe</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+              
+              <div id="userMenu" class="absolute right-0 mt-2 w-48 glass-card p-2 rounded-lg shadow-lg hidden z-50">
+                <a href="#" class="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 rounded-md">Profile</a>
+                <a href="#" class="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 rounded-md">Settings</a>
+                <div class="border-t border-gray-200 my-1"></div>
+                <a href="index.html" class="block px-4 py-2 text-sm text-foreground hover:bg-primary/10 rounded-md">Sign out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
+    <div class="flex justify-around">
+      <button class="slide-nav-btn flex flex-col items-center py-3 flex-1 active" data-slide="0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="6" height="18" rx="1"></rect>
+          <rect x="9" y="3" width="6" height="18" rx="1"></rect>
+          <rect x="16" y="3" width="6" height="18" rx="1"></rect>
+        </svg>
+        <span class="text-xs mt-1">Analytics</span>
+      </button>
+      <button class="slide-nav-btn flex flex-col items-center py-3 flex-1" data-slide="1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span class="text-xs mt-1">Customers</span>
+      </button>
+      <button class="slide-nav-btn flex flex-col items-center py-3 flex-1" data-slide="2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        <span class="text-xs mt-1">Prediction</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="pt-16 pb-20 md:pb-8 min-h-screen relative">
+    <!-- Slide Indicator -->
+    <div class="flex justify-center absolute top-16 left-0 right-0 z-30">
+      <div class="flex space-x-2 py-4">
+        <div class="slide-indicator w-16 active" data-slide="0"></div>
+        <div class="slide-indicator w-16" data-slide="1"></div>
+        <div class="slide-indicator w-16" data-slide="2"></div>
+      </div>
+    </div>
+    
+    <!-- Slide 1: Business Analytics -->
+    <div id="slide-0" class="dashboard-section active">
+      <div class="container mx-auto px-6 py-8">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold mb-2">Business Analytics</h1>
+          <p class="text-muted-foreground">Comprehensive insights into customer churn patterns and trends</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <!-- Stats Card 1 -->
+          <div class="glass-card p-6">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <p class="text-sm font-medium text-muted-foreground">Monthly Churn Rate</p>
+                <h3 class="text-2xl font-bold">4.5%</h3>
+              </div>
+              <div class="flex items-center text-green-500 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m17 7-9.9 9.9"></path>
+                  <path d="M17 17V7H7"></path>
+                </svg>
+                <span>1.2%</span>
+              </div>
+            </div>
+            <div class="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="absolute top-0 left-0 h-full bg-primary rounded-full" style="width: 35%"></div>
+            </div>
+            <p class="mt-3 text-xs text-muted-foreground">Compared to 5.7% last month</p>
+          </div>
+          
+          <!-- Stats Card 2 -->
+          <div class="glass-card p-6">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <p class="text-sm font-medium text-muted-foreground">Customer Retention</p>
+                <h3 class="text-2xl font-bold">86.7%</h3>
+              </div>
+              <div class="flex items-center text-green-500 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m7 17 9.9-9.9"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+                <span>2.3%</span>
+              </div>
+            </div>
+            <div class="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="absolute top-0 left-0 h-full bg-primary rounded-full" style="width: 86.7%"></div>
+            </div>
+            <p class="mt-3 text-xs text-muted-foreground">Compared to 84.4% last month</p>
+          </div>
+          
+          <!-- Stats Card 3 -->
+          <div class="glass-card p-6">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <p class="text-sm font-medium text-muted-foreground">At-Risk Customers</p>
+                <h3 class="text-2xl font-bold">456</h3>
+              </div>
+              <div class="flex items-center text-red-500 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m7 17 9.9-9.9"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+                <span>23</span>
+              </div>
+            </div>
+            <div class="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="absolute top-0 left-0 h-full bg-destructive rounded-full" style="width: 18%"></div>
+            </div>
+            <p class="mt-3 text-xs text-muted-foreground">Increased from 433 last month</p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <!-- Churn Rate Trend Chart -->
+          <div class="glass-card p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-lg font-semibold">Churn Rate Trend</h2>
+              <div class="flex space-x-2">
+                <button class="px-3 py-1 text-xs bg-primary/10 text-primary rounded-md">Monthly</button>
+                <button class="px-3 py-1 text-xs text-muted-foreground">Quarterly</button>
+                <button class="px-3 py-1 text-xs text-muted-foreground">Yearly</button>
+              </div>
+            </div>
+            <div class="h-64">
+              <canvas id="churnTrendChart"></canvas>
+            </div>
+          </div>
+          
+          <!-- Churn Reasons Chart -->
+          <div class="glass-card p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-lg font-semibold">Churn Reasons</h2>
+              <div>
+                <select class="text-sm bg-transparent border-b border-input px-2 py-1 focus:outline-none">
+                  <option>Last 30 Days</option>
+                  <option>Last Quarter</option>
+                  <option>Last Year</option>
+                </select>
+              </div>
+            </div>
+            <div class="h-64">
+              <canvas id="churnReasonsChart"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Customer Segments Chart -->
+          <div class="glass-card p-6">
+            <h2 class="text-lg font-semibold mb-6">Customer Segments</h2>
+            <div class="h-64">
+              <canvas id="customerSegmentsChart"></canvas>
+            </div>
+          </div>
+          
+          <!-- Retention Campaign Performance -->
+          <div class="glass-card p-6 col-span-1 lg:col-span-2">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-lg font-semibold">Retention Campaign Performance</h2>
+              <div>
+                <button class="p-1 text-muted-foreground hover:text-foreground">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+              <table class="min-w-full">
+                <thead>
+                  <tr>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Campaign</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Target Group</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Success Rate</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">ROI</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="px-4 py-3 whitespace-nowrap">Loyalty Discount</td>
+                    <td class="px-4 py-3 whitespace-nowrap">High-value at-risk</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                          <div class="bg-green-500 h-2 rounded-full" style="width: 78%"></div>
+                        </div>
+                        <span>78%</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-green-500">+148%</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3 whitespace-nowrap">Service Upgrade</td>
+                    <td class="px-4 py-3 whitespace-nowrap">Medium tenure</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                          <div class="bg-green-500 h-2 rounded-full" style="width: 64%"></div>
+                        </div>
+                        <span>64%</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-green-500">+92%</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3 whitespace-nowrap">Win-back Offer</td>
+                    <td class="px-4 py-3 whitespace-nowrap">Recently churned</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                          <div class="bg-yellow-500 h-2 rounded-full" style="width: 42%"></div>
+                        </div>
+                        <span>42%</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-yellow-500">+35%</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3 whitespace-nowrap">Family Plan</td>
+                    <td class="px-4 py-3 whitespace-nowrap">Single-line users</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                          <div class="bg-green-500 h-2 rounded-full" style="width: 69%"></div>
+                        </div>
+                        <span>69%</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-green-500">+112%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide 2: Customer Profile -->
+    <div id="slide-1" class="dashboard-section">
+      <div class="container mx-auto px-6 py-8">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold mb-2">Customer Profile</h1>
+          <p class="text-muted-foreground">View detailed customer information and churn prediction</p>
+        </div>
+        
+        <!-- Customer Search -->
+        <div class="glass-card p-6 mb-8">
+          <div class="max-w-xl mx-auto">
+            <label for="customerId" class="block text-sm font-medium text-foreground mb-2">Search Customer</label>
+            <div class="flex">
+              <input type="text" id="customerId" placeholder="Enter Customer ID" class="input-field rounded-r-none">
+              <button id="searchCustomerBtn" class="btn-primary rounded-l-none px-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Customer Profile Content -->
+        <div id="customerProfile" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Customer Info -->
+          <div class="glass-card p-6">
+            <div class="flex justify-between items-start mb-6">
+              <h2 class="text-lg font-semibold">Customer Information</h2>
+              <div class="px-2 py-1 text-xs bg-primary/10 text-primary rounded-md">Premium</div>
+            </div>
+            
+            <div class="flex items-center mb-6">
+              <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg">Emily Johnson</h3>
+                <p class="text-muted-foreground">ID: 78542396</p>
+              </div>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="flex justify-between border-b border-border pb-2">
+                <span class="text-muted-foreground">Account Type</span>
+                <span>Family Plan (3 lines)</span>
+              </div>
+              <div class="flex justify-between border-b border-border pb-2">
+                <span class="text-muted-foreground">Monthly Spend</span>
+                <span>$89.99</span>
+              </div>
+              <div class="flex justify-between border-b border-border pb-2">
+                <span class="text-muted-foreground">Customer Since</span>
+                <span>March 2019</span>
+              </div>
+              <div class="flex justify-between border-b border-border pb-2">
+                <span class="text-muted-foreground">Contract Type</span>
+                <span>Monthly</span>
+              </div>
+              <div class="flex justify-between border-b border-border pb-2">
+                <span class="text-muted-foreground">Payment Method</span>
+                <span>Credit Card</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-muted-foreground">Last Contact</span>
+                <span>15 days ago</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Churn Risk -->
+          <div class="glass-card p-6">
+            <h2 class="text-lg font-semibold mb-6">Churn Risk Analysis</h2>
+            
+            <div class="mb-8 text-center">
+              <div class="relative inline-block">
+                <svg class="w-36 h-36" viewBox="0 0 36 36">
+                  <path class="stroke-current text-gray-200" stroke-width="2" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  <path class="stroke-current text-destructive" stroke-width="2" fill="none" stroke-dasharray="75, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  <text x="18" y="20.5" class="font-bold text-3xl" text-anchor="middle">75%</text>
+                </svg>
+              </div>
+              <div class="bg-destructive/10 text-destructive px-4 py-2 rounded-md inline-block mt-4">
+                <span class="font-medium">High Risk of Churn</span>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium mb-3">Key Risk Factors:</h3>
+              <div class="space-y-3">
+                <div class="flex items-center">
+                  <div class="w-1 h-4 bg-destructive mr-3"></div>
+                  <span>Recent service disruptions (2 outages)</span>
+                </div>
+                <div class="flex items-center">
+                  <div class="w-1 h-4 bg-destructive mr-3"></div>
+                  <span>Increasing usage beyond plan limits</span>
+                </div>
+                <div class="flex items-center">
+                  <div class="w-1 h-4 bg-destructive mr-3"></div>
+                  <span>Competitor promotion inquiry (last call)</span>
+                </div>
+                <div class="flex items-center">
+                  <div class="w-1 h-4 bg-yellow-500 mr-3"></div>
+                  <span>Bill increases in last 3 months</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Retention Offers -->
+          <div class="glass-card p-6">
+            <h2 class="text-lg font-semibold mb-6">Recommended Retention Offers</h2>
+            
+            <div class="space-y-4">
+              <div class="border border-border rounded-lg p-4 hover:border-primary transition-colors cursor-pointer">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="font-medium">Premium Data Upgrade</h3>
+                  <div class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded">Best Match</div>
+                </div>
+                <p class="text-sm text-muted-foreground mb-3">Upgrade to unlimited premium data for all lines at current price for 6 months.</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm">84% success rate</span>
+                  <button class="px-3 py-1 text-xs bg-primary text-white rounded">Apply Offer</button>
+                </div>
+              </div>
+              
+              <div class="border border-border rounded-lg p-4 hover:border-primary transition-colors cursor-pointer">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="font-medium">Family Plan Discount</h3>
+                </div>
+                <p class="text-sm text-muted-foreground mb-3">15% monthly discount for next 12 months when adding a 4th line to family plan.</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm">76% success rate</span>
+                  <button class="px-3 py-1 text-xs bg-primary text-white rounded">Apply Offer</button>
+                </div>
+              </div>
+              
+              <div class="border border-border rounded-lg p-4 hover:border-primary transition-colors cursor-pointer">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="font-medium">Device Upgrade Credit</h3>
+                </div>
+                <p class="text-sm text-muted-foreground mb-3">$150 device upgrade credit on any new phone purchase with 24-month contract.</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm">68% success rate</span>
+                  <button class="px-3 py-1 text-xs bg-primary text-white rounded">Apply Offer</button>
+                </div>
+              </div>
+              
+              <div class="border border-border rounded-lg p-4 hover:border-primary transition-colors cursor-pointer">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="font-medium">Premium Support Package</h3>
+                </div>
+                <p class="text-sm text-muted-foreground mb-3">Free premium support and priority service for 12 months.</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm">62% success rate</span>
+                  <button class="px-3 py-1 text-xs bg-primary text-white rounded">Apply Offer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slide 3: Churn Prediction -->
+    <div id="slide-2" class="dashboard-section">
+      <div class="container mx-auto px-6 py-8">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold mb-2">Churn Prediction</h1>
+          <p class="text-muted-foreground">Predict churn probability for new customers</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Prediction Form -->
+          <div class="glass-card p-6 lg:col-span-2">
+            <h2 class="text-lg font-semibold mb-6">Customer Data Input</h2>
+            
+            <form id="churnPredictionForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="customer-type" class="block text-sm font-medium text-foreground mb-2">Customer Type</label>
+                <select id="customer-type" class="input-field">
+                  <option>New Customer</option>
+                  <option>Existing Customer</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="tenure" class="block text-sm font-medium text-foreground mb-2">Tenure (months)</label>
+                <input type="number" id="tenure" min="0" max="120" class="input-field" value="0">
+              </div>
+              
+              <div>
+                <label for="contract" class="block text-sm font-medium text-foreground mb-2">Contract Type</label>
+                <select id="contract" class="input-field">
+                  <option>Month-to-month</option>
+                  <option>One year</option>
+                  <option>Two year</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="payment-method" class="block text-sm font-medium text-foreground mb-2">Payment Method</label>
+                <select id="payment-method" class="input-field">
+                  <option>Electronic check</option>
+                  <option>Mailed check</option>
+                  <option>Bank transfer</option>
+                  <option>Credit card</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="monthly-charges" class="block text-sm font-medium text-foreground mb-2">Monthly Charges ($)</label>
+                <input type="number" id="monthly-charges" min="0" class="input-field" value="65">
+              </div>
+              
+              <div>
+                <label for="total-charges" class="block text-sm font-medium text-foreground mb-2">Total Charges ($)</label>
+                <input type="number" id="total-charges" min="0" class="input-field" value="0">
+              </div>
+              
+              <div>
+                <label for="online-security" class="block text-sm font-medium text-foreground mb-2">Online Security</label>
+                <select id="online-security" class="input-field">
+                  <option>No</option>
+                  <option>Yes</option>
+                  <option>No internet service</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="tech-support" class="block text-sm font-medium text-foreground mb-2">Tech Support</label>
+                <select id="tech-support" class="input-field">
+                  <option>No</option>
+                  <option>Yes</option>
+                  <option>No internet service</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="internet-service" class="block text-sm font-medium text-foreground mb-2">Internet Service</label>
+                <select id="internet-service" class="input-field">
+                  <option>DSL</option>
+                  <option>Fiber optic</option>
+                  <option>No</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="online-backup" class="block text-sm font-medium text-foreground mb-2">Online Backup</label>
+                <select id="online-backup" class="input-field">
+                  <option>No</option>
+                  <option>Yes</option>
+                  <option>No internet service</option>
+                </select>
+              </div>
+              
+              <div class="md:col-span-2">
+                <div class="flex items-center mb-4">
+                  <input type="checkbox" id="multiple-lines" class="h-4 w-4 text-primary border-input rounded mr-2">
+                  <label for="multiple-lines" class="text-sm text-foreground">Multiple Lines</label>
+                </div>
+                <div class="flex items-center mb-4">
+                  <input type="checkbox" id="streaming-tv" class="h-4 w-4 text-primary border-input rounded mr-2">
+                  <label for="streaming-tv" class="text-sm text-foreground">Streaming TV</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="streaming-movies" class="h-4 w-4 text-primary border-input rounded mr-2">
+                  <label for="streaming-movies" class="text-sm text-foreground">Streaming Movies</label>
+                </div>
+              </div>
+              
+              <div class="md:col-span-2 mt-4">
+                <button type="submit" class="btn-primary w-full">Predict Churn Probability</button>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Prediction Results -->
+          <div class="glass-card p-6">
+            <h2 class="text-lg font-semibold mb-6">Prediction Results</h2>
+            
+            <div id="predictionResult" class="hidden">
+              <div class="text-center mb-8">
+                <div class="relative inline-block">
+                  <svg class="w-36 h-36" viewBox="0 0 36 36">
+                    <path class="stroke-current text-gray-200" stroke-width="2" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path id="churnRiskMeter" class="stroke-current text-yellow-500" stroke-width="2" fill="none" stroke-dasharray="38, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <text x="18" y="20.5" id="churnPercentage" class="font-bold text-3xl" text-anchor="middle">38%</text>
+                  </svg>
+                </div>
+                <div id="riskLabel" class="bg-yellow-500/10 text-yellow-500 px-4 py-2 rounded-md inline-block mt-4">
+                  <span class="font-medium">Medium Risk of Churn</span>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="text-sm font-medium mb-3">Key Risk Factors:</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center">
+                    <div class="w-1 h-4 bg-yellow-500 mr-3"></div>
+                    <span>Month-to-month contract</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-1 h-4 bg-yellow-500 mr-3"></div>
+                    <span>No online security</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-1 h-4 bg-green-500 mr-3"></div>
+                    <span>Low tenure (new customer)</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-8">
+                <h3 class="text-sm font-medium mb-3">Recommended Actions:</h3>
+                <ul class="list-disc list-inside space-y-2 text-sm text-muted-foreground">
+                  <li>Offer security package add-on</li>
+                  <li>Consider contract upgrade incentives</li>
+                  <li>Monitor usage patterns closely</li>
+                  <li>Schedule follow-up satisfaction call</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div id="noPrediction" class="flex flex-col items-center justify-center h-full text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-muted-foreground mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <p class="text-muted-foreground mb-6">Enter customer data and click "Predict" to see churn probability analysis</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Chatbot -->
+  <div id="chatbot" class="fixed bottom-0 right-0 m-6 z-50 hidden">
+    <div class="glass-card rounded-lg shadow-xl w-80 md:w-96 flex flex-col h-96">
+      <div class="p-4 border-b border-border flex justify-between items-center">
+        <div class="flex items-center">
+          <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z"></path>
+              <path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"></path>
+            </svg>
+          </div>
+          <h3 class="font-medium">TeleGuard Assistant</h3>
+        </div>
+        <button id="closeChatbot" class="text-muted-foreground hover:text-foreground">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div id="chatMessages" class="flex-1 p-4 overflow-y-auto">
+        <div class="chat-message chat-message-bot">
+          <p>Hello! I'm your TeleGuard assistant. How can I help you with churn prediction or customer retention today?</p>
+        </div>
+      </div>
+      
+      <div class="p-4 border-t border-border">
+        <div class="flex">
+          <input type="text" id="chatInput" placeholder="Type your message..." class="input-field rounded-r-none flex-1">
+          <button id="sendMessage" class="btn-primary rounded-l-none px-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m22 2-7 20-4-9-9-4Z"></path>
+              <path d="M22 2 11 13"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  <script src="script.js"></script>
+</body>
+</html>
