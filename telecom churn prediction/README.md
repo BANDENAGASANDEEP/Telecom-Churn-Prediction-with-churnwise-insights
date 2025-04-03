@@ -30,25 +30,25 @@ Visualized relationships between customer attributes and churn rates
 3️. Model Building & Evaluation
 # Implemented various machine learning models:
 
-Logistic Regression
+1. Logistic Regression
 
-Decision Trees
+2. Decision Trees
 
-Random Forest
+3. Random Forest
 
-xgboost
+4. xgboost
 
-svm
+5. svm
 
 ## Evaluated model performance using:
 
-Accuracy
+1. Accuracy
 
-Precision
+2. Precision
 
-Recall
+3. Recall
 
-F1-score
+4. F1-score
 
 ## Insights & Business Impact
 Identified factors influencing customer churn (e.g., contract type, monthly charges, tenure)
@@ -65,13 +65,15 @@ Machine Learning Models
 ## How to Use
 1. Clone the repository:
 
-
-git clone https://github.com/your-repo-url.git
-cd your-repo-folder
+  git clone https://github.com/your-repo-url.git
+  
+  cd your-repo-folder
+  
 2. Install dependencies:
 
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
+
 3. Run the Jupyter Notebook or Google Colab to train and evaluate the models.
 
 ## Results & Conclusion
