@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -16,10 +15,11 @@ export default function Login() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Check if user is already logged in
-  if (authService.isAuthenticated()) {
-    navigate("/dashboard");
-  }
+  useEffect(() => {
+    if (authService.isAuthenticated()) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,8 +50,7 @@ export default function Login() {
         title: "Registration Successful",
         description: "Your account has been created. Please log in.",
       });
-      
-      // Switch to login tab after successful registration
+
       const loginTab = document.getElementById("login-tab") as HTMLButtonElement;
       if (loginTab) loginTab.click();
     } catch (error) {
@@ -83,7 +82,7 @@ export default function Login() {
           </Link>
         </div>
       </header>
-      
+
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md space-y-6 mt-16">
           <div className="text-center space-y-2">
@@ -92,14 +91,14 @@ export default function Login() {
               Sign in to your account or create a new one
             </p>
           </div>
-          
+
           <div className="bg-card border rounded-lg shadow-sm">
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger id="login-tab" value="login">Login</TabsTrigger>
                 <TabsTrigger value="register">Register</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="login" className="p-6">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
@@ -128,7 +127,7 @@ export default function Login() {
                   </Button>
                 </form>
               </TabsContent>
-              
+
               <TabsContent value="register" className="p-6">
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="space-y-2">
