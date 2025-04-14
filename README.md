@@ -1,122 +1,129 @@
 
-# Telecom Churn Prediction - ChurnWise Insights
 
-This project consists of a FastAPI backend and a React frontend for telecom customer churn prediction and analysis.
+# 📊 Telecom Churn Prediction - ChurnWise Insights
 
-## Project Structure
+This project consists of a **FastAPI backend** and a **React frontend** for telecom customer churn prediction, AI-powered insights, and chatbot-based customer retention strategies.
+
+---
+
+## 🧱 Project Structure
 
 ```
-ChurnWise-Insights/
+Telecom-Churn-Prediction-with-churnwise-insights/
 │
-├── backend/              # Backend FastAPI code
-│   ├── main.py           # Main API file
-│   ├── .gitignore        # Backend gitignore
-│   └── README.md         # Backend setup instructions
+├── backend/                       # Backend FastAPI code
+│   ├── main.py                    # Main API file
+│   ├── .gitignore                 # Backend .gitignore
+│   └── README.md                  # Backend setup instructions
 │
-├── churnwise-insights-main/  # Required data files - MUST CREATE THIS FOLDER
-│   ├── users.csv             # User data (created automatically)
-│   ├── Telco-Customer-Churn.csv  # REQUIRED: Telecom customer data
+├── churnwise-insights-main/      # Required data folder - MUST CREATE THIS
+│   ├── users.csv                      # User data (auto-generated)
+│   ├── Telco-Customer-Churn.csv      # REQUIRED: Customer data
 │   ├── random_forest_best_model.pkl  # REQUIRED: ML model
-│   └── customer_churn_store.json  # REQUIRED: Chatbot document store
+│   └── customer_churn_store.json     # REQUIRED: Chatbot data
 │
-├── src/                 # Frontend React code
-│   ├── components/      # React components
-│   ├── pages/           # Page components
-│   ├── services/        # API services
-│   └── ...              # Other frontend files
+├── src/                          # Frontend React code
+│   ├── components/               # Reusable UI components
+│   ├── pages/                    # React route pages
+│   ├── services/                 # API integration services
+│   └── ...                       # Other frontend files
 │
 └── ... (other project files)
 ```
 
-## Required Data Files
+---
 
-Before running the application, you MUST have the following files in place:
+## 📁 Required Data Files
 
-1. **Telco-Customer-Churn.csv**: Dataset with telecom customer information
-2. **random_forest_best_model.pkl**: Pre-trained machine learning model for churn prediction
-3. **customer_churn_store.json**: Document store for the AI chatbot
+Place these files inside the `churnwise-insights-main/` folder in your project root:
 
-These files need to be placed in the `churnwise-insights-main` folder at the root of the project.
+- ✅ `Telco-Customer-Churn.csv`: Telecom customer dataset  
+- ✅ `random_forest_best_model.pkl`: Pre-trained ML model for churn prediction  
+- ✅ `customer_churn_store.json`: AI chatbot knowledge base  
 
-## Setup Instructions
+---
 
-### 1. Backend Setup
+## 🛠️ Setup Instructions
 
-1. Create the required data folder:
+### 🔹 1. Backend Setup
+
 ```bash
-mkdir -p churnwise-insights-main
-```
+# Navigate to backend folder
+cd C:\Users\Sanjana\Downloads\churnwise-insights\churnwise-insights-main\backend
 
-2. Place the required data files in the `churnwise-insights-main` folder:
-   - Telco-Customer-Churn.csv
-   - random_forest_best_model.pkl
-   - customer_churn_store.json
+# Activate Python virtual environment
+venv\Scripts\activate
 
-3. Set up Python virtual environment:
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows, use: venv\Scripts\activate
-```
-
-4. Install Python dependencies:
-```bash
+# Install dependencies (only if not already installed)
 pip install fastapi uvicorn pandas scikit-learn farm-haystack passlib python-multipart
+
+# Run the backend server
+uvicorn main:app
 ```
 
-5. Start the backend server:
+📌 The backend will be live at: **http://localhost:8000**
+
+---
+
+### 🔹 2. Frontend Setup
+
 ```bash
-python main.py
+# Navigate to project root where package.json is located
+cd C:\Users\Sanjana\Downloads\Telecom-Churn-Prediction-with-churnwise-insights
+
+# Install Node.js dependencies
+curl -fsSL https://bun.sh/install | bash
+
+# Start the frontend development server
+bunx vite
 ```
 
-The backend API will be running at: http://localhost:8000
+📌 The frontend will be live at: **http://localhost:8080**
 
-### 2. Frontend Setup
 
-1. Install Node.js dependencies:
-```bash
-npm install
+
+## 🔗 Live Deployment
+
+Your project is live at:
+
+**🌍 [https://telecom-churn-prediction-with-ch-production-b5f3.up.railway.app](https://telecom-churn-prediction-with-ch-production-b5f3.up.railway.app)**
+
+---
+
+## 📘 API Documentation
+
+- Swagger UI → [http://localhost:8000/docs](http://localhost:8000/docs)  
+- Redoc Docs → [http://localhost:8000/redoc](http://localhost:8000/redoc)  
+- Health Check → [http://localhost:8000/health](http://localhost:8000/health)
+
+---
+
+## 🚀 Deployment Guide (Railway)
+
+To deploy on [Railway](https://railway.app):
+
+1. Push the project to GitHub  
+2. Create a new Railway project  
+3. Add a service for:
+   - Backend (FastAPI)
+   - Frontend (React Vite)  
+4. Set proper root folders for each service  
+5. Deploy → Railway will provide a live URL like:
+
+🔗 **[https://telecom-churn-prediction-with-ch-production-b5f3.up.railway.app](https://telecom-churn-prediction-with-ch-production-b5f3.up.railway.app)**
+
+---
+
+## ✅ Summary
+
+| Part        | URL                                 |
+|-------------|--------------------------------------|
+| Backend API | http://localhost:8000                |
+| Frontend    | http://localhost:8080                |
+| Live App    | https://telecom-churn-prediction-with-ch-production-b5f3.up.railway.app |
+| Swagger UI  | http://localhost:8000/docs           |
+
+---
+
+💡 Make sure all required files are present in `churnwise-insights-main/` before running the app.
 ```
-
-2. Start the frontend development server:
-```bash
-npm run dev
-```
-
-The frontend will be available at: http://localhost:5173
-
-## Usage
-
-1. Open your browser and navigate to http://localhost:5173
-2. Use the login page to sign in (register if needed)
-3. Explore the dashboard with churn prediction and analytics features
-## Deployment
-
-### Deploying on Railway
-
-1. Push your code to GitHub.
-
-2. Connect the GitHub repository to Railway.
-
-3. Deploy the backend and frontend services.
-
-4. Access the deployed application at the generated Railway URL.
-
-### Live Deployment
-
-The project is currently deployed at:
-https://telecom-churn-prediction-with-ch-production.up.railway.app
-
-### Usage
-
-1. Open your browser and navigate to http://localhost:5173 (or the Railway URL if deployed).
-
-2. Use the login page to sign in (register if needed).
-
-3. Explore the dashboard with churn prediction and analytics features.
-
-## API Documentation
-
-- API docs: http://localhost:8000/docs
-- Alternative API docs: http://localhost:8000/redoc
-- Health check: http://localhost:8000/health
